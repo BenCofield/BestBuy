@@ -1,0 +1,51 @@
+﻿
+@model BestBuy.Models.ViewModels.ProductsListViewModel
+
+<h1>Products</h1>
+
+<form asp-controller="Inventory"
+      asp-action="SearchProducts"
+      method="post">
+    <input type="text"
+           name="searchTerms"
+           value="@Model.SearchTerms"/>
+    <button type="submit">Search</button>
+</form>
+
+<a asp-action="CreateProduct"
+   asp-controller="Inventory"
+   class="btn btn-primary">New Product</a>
+
+<div class="product-list">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Product Id</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Stock Level</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.Products)
+            {
+                <tr>
+                    <td>@p.ProductID</td>
+                    <td>@p.Name</td>
+                    <td>@p.Price</td>
+                    <td>@p.StockLevel</td>
+                    <td>
+                        @Html.ActionLink(linkText: "Edit",
+                                    actionName: "EditProduct",
+                                    controllerName: "Inventory",
+                                    routeValues: new
+                                    {
+                                        id = p.ProductID,
+                                    },
+                                    htmlAttributes: null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

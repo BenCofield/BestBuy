@@ -1,0 +1,75 @@
+﻿@model Product
+
+<h2>Create New Item</h2>
+
+<a asp-action="GetAllProducts"
+    asp-controller="Inventory"
+    class="btn btn-primary">Return To List</a>
+
+@{
+    if (ViewBag.SqlError != null)
+    {
+        <p class="error-message">Database Error: @ViewBag.SqlError</p>
+    }
+    if (ViewBag.InvalidInput != null)
+    {
+        <p class="error-message">Invalid input:</p>
+        <ul>
+            @foreach (var err in ViewBag.InvalidInput)
+            {
+                <li>@err</li>
+            }
+        </ul>
+    }
+}
+
+<form asp-action="AddProductToDatabase" asp-controller="Inventory" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Stock Level</td>
+                <td>Category</td>
+                <td>OnSale</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <td>
+                    <input asp-for="Name"
+                           type="text"
+                           class="form-control" />
+                </td>
+                <td>
+                    <input asp-for="Price"
+                           type="number"
+                           class="form-control" />
+                </td>
+                <td>
+                    <input asp-for="StockLevel"
+                           type="number"
+                           class="form-control" />
+                </td>
+                <td>
+                    <select asp-for="CategoryID"
+                           type="number"
+                           class="form-control" >
+                        
+                    </select>
+                </td>
+                <td>
+                    <select asp-for="OnSale">
+                        <option value="@Globals.No" selected>No</option>
+                        <option value="@Globals.Yes">Yes</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <input type="submit"
+           value="Create"
+           class="btn btn-primary"/>
+</form>

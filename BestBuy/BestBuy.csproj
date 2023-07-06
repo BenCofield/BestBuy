@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.5" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.8" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Models\Data\" />
+    <None Remove="Views\Inventory\" />
+    <None Remove="Models\ViewModels\" />
+    <None Remove="Models\HtmlHelpers\" />
+    <None Remove="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Data\" />
+    <Folder Include="Views\Inventory\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Models\HtmlHelpers\" />
+    <Folder Include="Data\" />
+  </ItemGroup>
+</Project>

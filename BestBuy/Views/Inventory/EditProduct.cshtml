@@ -1,0 +1,82 @@
+﻿@model Product
+
+<h2>Edit Item</h2>
+
+<a asp-action="GetAllProducts"
+   asp-controller="Inventory"
+   class="btn btn-primary">Return To List</a>
+
+@{
+    if (ViewBag.SqlError != null)
+    {
+        <p class="error-message">Database Error: @ViewBag.SqlError</p>
+    }
+    if (ViewBag.InvalidInput != null)
+    {
+        <p class="error-message">Invalid input:</p>
+        <ul>
+            @foreach(var err in ViewBag.InvalidInput)
+            {
+                <li>@err</li>
+            }
+        </ul>
+    }
+}
+
+<form asp-action="UpdateProduct" asp-controller="Inventory">
+
+    <input asp-for="ProductID" type="hidden" value="@Model.ProductID" />
+    <input asp-for="CategoryID" type="hidden" value="@Model.CategoryID"/>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Stock Level</td>
+                <td>OnSale</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <td>
+                    <input asp-for="Name" type="text" value="@Model.Name" class="form-control" />
+                </td>
+                <td><input asp-for="Price" type="number" value="@Model.Price" class="form-control" /></td>
+                <td><input asp-for="StockLevel" type="number" value="@Model.StockLevel" class="form-control" /></td>
+                <td>
+
+                    <select asp-for="OnSale">
+                        @for (int i = 0; i < 2; i++)
+                        {
+                            if (i == Model.OnSale)
+                            {
+                                <option value="@i" selected>@Globals.YesNo[i]</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@Globals.YesNo[i]</option>
+                            }
+                        }
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Update" class="btn btn-primary"/>
+</form>
+@Html.ActionLink(linkText: "Delete",
+                 actionName: "DeleteProduct",
+                 controllerName: "Inventory",
+                 routeValues: new { id = Model.ProductID },
+                 htmlAttributes: new
+                 {
+                     @class = "btn btn-danger",
+                     @onclick = "return confirm('Are you sure?')"
+                 })
+@*<a asp-action="DeleteProduct"
+   asp-controller="Inventory"
+   asp-route-id="@Model.ProductID"
+   class="btn btn-danger"
+   onclick="return confirm('Are you sure?')">Delete</a>*@
